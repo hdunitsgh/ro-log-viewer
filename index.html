@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Monthly Water Treatment System Report - HDU SGH</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      margin: 20px;
+      background-color: #f8f9fa;
+      color: #212529;
+    }
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+      background: #ffffff;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.08);
+    }
+    .header {
+      text-align: center;
+      margin-bottom: 25px;
+    }
+    .header img {
+      width: 110px;
+      height: auto;
+      margin-bottom: 10px;
+      border-radius: 50%;
+    }
+    h1 {
+      color: #007bff;
+      font-size: 1.7em;
+      margin: 0 0 5px 0;
+    }
+    h2 {
+      color: #6c757d;
+      font-size: 1.05em;
+      font-weight: normal;
+      margin: 0;
+    }
+    label {
+      display: block;
+      margin-top: 15px;
+      margin-bottom: 5px;
+      font-weight: 600;
+      font-size: 13.5px;
+      color: #333;
+    }
+    select {
+      width: 100%;
+      padding: 9px 11px;
+      margin-bottom: 10px;
+      border: 1px solid #ced4da;
+      border-radius: 4px;
+      box-sizing: border-box;
+      font-size: 14px;
+      background-color: #fff;
+    }
+    select:focus {
+      outline: none;
+      border-color: #80bdff;
+      box-shadow: 0 0 0 0.2rem rgba(0,123,255,.2);
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 15px;
+    }
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+    }
+
+    .item-card {
+      background: #fdfdfd;
+      border: 1px solid #e2e8f0;
+      border-radius: 6px;
+      padding: 16px 18px;
+      margin-bottom: 15px;
+    }
+    .item-card-header {
+      font-weight: 700;
+      color: #007bff;
+      border-bottom: 1px solid #e2e8f0;
+      padding-bottom: 6px;
+      margin-bottom: 12px;
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .asset-row {
+      margin-bottom: 12px;
+    }
+    .asset-val {
+      font-size: 14px;
+      color: #212529;
+      margin-top: 2px;
+    }
+
+    /* Gated / Blurred Button Style */
+    .btn-action {
+      background-color: #007bff;
+      color: white;
+      padding: 13px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 1em;
+      width: 100%;
+      font-weight: bold;
+      margin-top: 15px;
+      transition: all 0.3s ease;
+    }
+    .btn-action:hover:not(:disabled) {
+      background-color: #0056b3;
+    }
+    .btn-disabled {
+      opacity: 0.45;
+      filter: blur(0.5px);
+      cursor: not-allowed !important;
+      pointer-events: none;
+      background-color: #6c757d;
+    }
+
+    #message-area {
+      margin-top: 20px;
+      padding: 12px;
+      border-radius: 4px;
+      text-align: center;
+      display: none;
+      font-weight: bold;
+    }
+    .success { background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+    .error { background-color: #ffe6e6; color: red; border: 1px solid red; }
+    .normal { background-color: #e2e3e5; color: #383d41; border: 1px solid #d6d8db; }
+
+    .footer {
+      margin-top: 40px;
+      padding-top: 15px;
+      border-top: 1px solid #ced4da;
+      font-size: 0.8em;
+      color: #6c757d;
+      text-align: center;
+    }
+
+    @media (max-width: 768px) {
+      .grid-3, .grid-2 { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <div class="header">
+    <img src="https://lh3.googleusercontent.com/d/1tCDAMimy_b0x9kRmWNyYMn4voR9Ynr0J" alt="Logo">
+    <h1>MONTHLY WATER TREATMENT SYSTEM REPORT</h1>
+    <h2>Haemodialysis Unit, Sarawak General Hospital</h2>
+  </div>
+
+  <div class="grid-3">
+    <div>
+      <label for="selMonth">Select Month</label>
+      <select id="selMonth">
+        <option value="1">January</option>
+        <option value="2">February</option>
+        <option value="3">March</option>
+        <option value="4">April</option>
+        <option value="5">May</option>
+        <option value="6">June</option>
+        <option value="7">July</option>
+        <option value="8">August</option>
+        <option value="9">September</option>
+        <option value="10">October</option>
+        <option value="11">November</option>
+        <option value="12">December</option>
+      </select>
+    </div>
+    <div>
+      <label for="selYear">Select Year</label>
+      <select id="selYear">
+        <option value="2026">2026</option>
+        <option value="2027">2027</option>
+        <option value="2028">2028</option>
+        <option value="2029">2029</option>
+        <option value="2030">2030</option>
+      </select>
+    </div>
+    <div>
+      <label for="selRo">Select RO System</label>
+      <select id="selRo" onchange="loadAssetInfo(this.value)">
+        <option value="">-- Choose RO System --</option>
+        <option value="RO 01">RO 01</option>
+        <option value="RO 02">RO 02</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Structured Asset Details Card -->
+  <div id="assetSection" class="item-card" style="display: none; background: #f8fafc; margin-top: 15px;">
+    <div class="item-card-header">Asset Details</div>
+
+    <div class="asset-row" style="font-size: 15px;">
+      <b>RO No.:</b> <span id="astRo" style="font-weight: bold; color: #007bff;">-</span>
+    </div>
+
+    <div class="grid-3 asset-row">
+      <div>
+        <b>Brand:</b>
+        <div class="asset-val" id="astBrand">-</div>
+      </div>
+      <div>
+        <b>Model:</b>
+        <div class="asset-val" id="astModel">-</div>
+      </div>
+      <div>
+        <b>Serial No.:</b>
+        <div class="asset-val" id="astSerial">-</div>
+      </div>
+    </div>
+
+    <div class="grid-2 asset-row">
+      <div>
+        <b>KEW.PA No.:</b>
+        <div class="asset-val" id="astAsset">-</div>
+      </div>
+      <div>
+        <b>ASIS No.:</b>
+        <div class="asset-val" id="astAssis">-</div>
+      </div>
+    </div>
+
+    <div class="grid-2 asset-row" style="margin-bottom: 0;">
+      <div>
+        <b>Year made:</b> <span id="astYear" style="color:#212529;">-</span>
+      </div>
+      <div>
+        <b>Status:</b> <span id="astStatus" style="color:#212529;">-</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Blurred/Disabled by default -->
+  <button type="button" class="btn-action btn-disabled" id="btnGen" onclick="generatePdfLog()" disabled>
+    📄 Generate Monthly Report
+  </button>
+
+  <div id="message-area"></div>
+
+  <div class="footer">
+    &copy; Designed and developed by PPP Zulfadlie bin Janie<br>
+    for Haemodialysis Unit, Sarawak General Hospital
+  </div>
+</div>
+
+<script>
+  const SCRIPT_API_URL = "https://script.google.com/macros/s/AKfycbwHkqSKWrF_xt3xDc6XRk3F-8opD4WBvfGglxjLwHcKJqohGEyUcEzU6lNcVnkdTq2Ckw/exec";
+
+  function setButtonState(enabled) {
+    const btn = document.getElementById('btnGen');
+    if (enabled) {
+      btn.disabled = false;
+      btn.classList.remove('btn-disabled');
+    } else {
+      btn.disabled = true;
+      btn.classList.add('btn-disabled');
+    }
+  }
+
+  function loadAssetInfo(ro) {
+    setButtonState(false);
+    if (!ro) {
+      document.getElementById('assetSection').style.display = "none";
+      hideMessage();
+      return;
+    }
+
+    showMessage("Loading Asset details...", "normal");
+    fetch(SCRIPT_API_URL, {
+      method: "POST",
+      headers: { "Content-Type": "text/plain;charset=utf-8" },
+      body: JSON.stringify({ action: "getAssetAndLastLog", payload: { roNo: ro } })
+    })
+    .then(r => r.json())
+    .then(res => {
+      hideMessage();
+      if (res.success) {
+        const a = res.asset;
+        document.getElementById('astRo').textContent = a.roNo;
+        document.getElementById('astBrand').textContent = a.brand;
+        document.getElementById('astModel').textContent = a.model;
+        document.getElementById('astSerial').textContent = a.serialNo;
+        document.getElementById('astAsset').textContent = a.assetNo;
+        document.getElementById('astAssis').textContent = a.assisNo;
+        document.getElementById('astYear').textContent = a.yearMade;
+        document.getElementById('astStatus').textContent = a.status;
+
+        // Display asset details and activate button
+        document.getElementById('assetSection').style.display = "block";
+        setButtonState(true);
+      } else {
+        showMessage("Asset load error: " + res.error, "error");
+      }
+    })
+    .catch(err => showMessage("Asset load error: " + err, "error"));
+  }
+
+  function generatePdfLog() {
+    const ro = document.getElementById('selRo').value;
+    const m = document.getElementById('selMonth').value;
+    const y = document.getElementById('selYear').value;
+
+    if (!ro) return;
+
+    const btn = document.getElementById('btnGen');
+    btn.disabled = true;
+    btn.textContent = "Writing & Preparing Report...";
+    showMessage("Populating and generating report...", "normal");
+
+    fetch(SCRIPT_API_URL, {
+      method: "POST",
+      headers: { "Content-Type": "text/plain;charset=utf-8" },
+      body: JSON.stringify({
+        action: "generateMonthlyLog",
+        payload: { roNo: ro, month: m, year: y }
+      })
+    })
+    .then(r => r.json())
+    .then(res => {
+      btn.disabled = false;
+      btn.textContent = "📄 Generate Monthly Report";
+
+      if (res.success) {
+        showMessage("Report generated! Downloading PDF...", "success");
+
+        const byteCharacters = atob(res.pdfBase64);
+        const byteNumbers = new Uint8Array(byteCharacters.length);
+        for (let i = 0; i < byteCharacters.length; i++) {
+          byteNumbers[i] = byteCharacters.charCodeAt(i);
+        }
+
+        const blob = new Blob([byteNumbers], { type: "application/pdf" });
+        const blobUrl = URL.createObjectURL(blob);
+        const fileName = res.fileName || `Monthly_Log_${ro}_${m}_${y}.pdf`;
+
+        // Direct Download
+        const downloadLink = document.createElement("a");
+        downloadLink.href = blobUrl;
+        downloadLink.download = fileName;
+        document.body.appendChild(downloadLink);
+        downloadLink.click();
+        document.body.removeChild(downloadLink);
+
+        // Preview Tab
+        setTimeout(() => {
+          const previewTab = window.open();
+          if (previewTab) {
+            previewTab.document.write(
+              `<iframe src="${blobUrl}" frameborder="0" style="border:0; top:0px; left:0px; bottom:0px; right:0px; width:100%; height:100%;" allowfullscreen></iframe>`
+            );
+          }
+        }, 300);
+
+      } else {
+        showMessage("Export Error: " + res.error, "error");
+      }
+    })
+    .catch(err => {
+      btn.disabled = false;
+      btn.textContent = "📄 Generate Monthly Report";
+      showMessage("Connection error: " + err, "error");
+    });
+  }
+
+  function showMessage(text, type) {
+    const msg = document.getElementById('message-area');
+    msg.style.display = "block";
+    msg.textContent = text;
+    msg.className = type === "error" ? "error" : (type === "success" ? "success" : "normal");
+  }
+
+  function hideMessage() {
+    document.getElementById('message-area').style.display = "none";
+  }
+</script>
+
+</body>
+</html>
